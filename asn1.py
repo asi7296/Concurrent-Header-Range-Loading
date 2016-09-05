@@ -10,25 +10,6 @@ num_req = None
 bytes_per_range_header = None
 output_file = None
 
-'''
-# validation and assigning of the arguments to global vars
-if len(sys.argv) != 9: 
-	sys.exit('Invalid # of arguments passed, please view README.txt to view usage details')
-# get args, irrespective of order
-else:
-	for arg in range(len(sys.argv)):
-		if sys.argv[arg] == '-w' :
-			url = sys.argv[arg+1]
-		if sys.argv[arg] == '-n' :
-			num_req = sys.argv[arg+1]
-		if sys.argv[arg] == '-r' :
-			bytes_per_range_header = sys.argv[arg+1]
-		if sys.argv[arg] == '-O' :
-			output_file = sys.argv[arg+1]
-# validate types of each arg
-if not (type(url) == 'str' and type(num_req) == 'int' and type(bytes_per_range_header) == 'int' and type(output_file) == 'str'):
-	sys.exit('Invalid types for aguments, please view README.txt for usage details')
-'''
 # validation of the args
 arg_parser.add_argument('-w', required=True, dest='URL', type=str)
 arg_parser.add_argument('-n', required=True, dest='NumConcurrentRequests', type=int)
@@ -59,10 +40,6 @@ else:
 	file_req = url[ url.index('/'): ]
 print file_req
 
-########################
-# add to readme - if 'localhost' is visited, apache2 webserver
-# welcome message will be used
-########################
 
 
 # Getting the size of the page through the header
@@ -70,14 +47,14 @@ connection = httplib.HTTPConnection(server_name)
 connection.request('HEAD', file_req)
 response = connection.getresponse()
 headers = response.getheaders()
-#content_length = headers[0][1] #first element of response obj, 2nd element of the the tuple ie 1st element
+
 content_length = 0
 for i in range(0, len(headers)):
 	if(headers[i][0] == 'content-length'):
 		content_length = headers[i][1]
 
 
-# stored the html content returned from the requests
+# store the html content returned from the requests
 page_content = [None] * num_req
 
 # Thread class
@@ -113,7 +90,6 @@ else:
 	# loop over number of requests client wants
 	for connection in range (0, num_req):
 		#create a thread for each client	
-		#print str(start_byterange) + ' . ' + str(end_byterange)
 		new_conn = threaded_connection(connection, start_byterange, end_byterange)
 		new_conn.start()
 		new_conn.run()

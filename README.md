@@ -4,7 +4,7 @@ A script written to understand how content is received through a GET request to 
 
 <br><br>
 <b>Execution</b><br>
-./asn1.py -w <url> -n <number of concurrent requests> -r <bytes in one range header> -O <output-file>
+./asn1.py -w [url] -n [number of concurrent requests] -r [bytes per header - range] -O [output-file]
 <br><Br><i>Examples:</i>
 ./asn1.py -w localhost/page1.html -n 20 -r 2 -O Myopfile.html
 ./asn1.py -w www.google.com -n 1 -r 20 -O Myopfile.html<br>

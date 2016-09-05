@@ -70,7 +70,12 @@ connection = httplib.HTTPConnection(server_name)
 connection.request('HEAD', file_req)
 response = connection.getresponse()
 headers = response.getheaders()
-content_length = headers[0][1] #first element of response obj, 2nd element of the the tuple ie 1st element
+#content_length = headers[0][1] #first element of response obj, 2nd element of the the tuple ie 1st element
+content_length = 0
+for i in range(0, len(headers)):
+	if(headers[i][0] == 'content-length'):
+		content_length = headers[i][1]
+
 
 # stored the html content returned from the requests
 page_content = [None] * num_req
